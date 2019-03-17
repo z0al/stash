@@ -22,6 +22,8 @@
 		"test": "jest"
 	},
 	"devDependencies": {
+		"@babel/preset-env": "^7.3.4",
+		"@types/jest": "^24.0.11",
 		"documentation": "^9.3.1",
 		"jest": "^24.5.0",
 		"microbundle": "^0.11.0",
