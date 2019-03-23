@@ -1,6 +1,16 @@
 // @ts-check
 
-// Ours
+/**
+ * Create an action function
+ *
+ * @param {string} type
+ * @param {*} func
+ * @returns
+ */
+export function createAction(type, func) {
+	func.type = type;
+	return func;
+}
 
 /**
  * Create a store that holds the state tree.
@@ -15,7 +25,7 @@
  *
  * @returns {Store}
  */
-function createStore(state) {
+export function createStore(state) {
 	/**
 	 * Call `action()` and persist the result back to the store.
 	 *
@@ -50,5 +60,3 @@ function createStore(state) {
 	// Exposed store methods
 	return { getState, dispatch };
 }
-
-export { createStore };

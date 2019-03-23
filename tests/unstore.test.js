@@ -1,5 +1,5 @@
 // Ours
-import { createStore } from '../src';
+import { createStore, createAction } from '../src';
 
 describe('createStore', () => {
 	it('returns valid store object', () => {
@@ -61,5 +61,16 @@ describe('createStore', () => {
 		store.dispatch(decrement);
 
 		expect(store.getState()).toBe(0);
+	});
+});
+
+describe('createAction', () => {
+	it('adds .type to the action function', () => {
+		const fn = state => state;
+		const act = createAction('myaction', fn);
+
+		expect(act.type).toBe('myaction');
+		expect(act).toBeInstanceOf(Function);
+		expect(act).toBe(fn);
 	});
 });
