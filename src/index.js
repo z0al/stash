@@ -22,10 +22,13 @@ export function createAction(type, func) {
  * @typedef Store
  * @property {*} getState
  * @property {*} dispatch
+ * @property {*} subscribe
  *
  * @returns {Store}
  */
 export function createStore(state) {
+	const subscribers = [];
+
 	/**
 	 * Call `action()` and persist the result back to the store.
 	 *
@@ -46,6 +49,35 @@ export function createStore(state) {
 
 		// Override current state
 		state = next;
+
+		// Notify subscribers
+		for (let sub of subscribers) {
+			sub(state, action);
+		}
+	}
+
+	/**
+	 * Register a subscriber function to be called whenever state
+	 * is changed. Returns an `unsubscribe()` function.
+	 *
+	 * @param {Function} fn
+	 */
+	function subscribe(fn) {
+		if (typeof fn !== 'function') {
+			throw new Error('A subscriber must be a function');
+		}
+
+		// Add to the list
+		subscribers.push(fn);
+
+		// Unsubscribe
+		return () => {
+			const index = subscribers.indexOf(fn);
+
+			if (index >= 0) {
+				subscribers.splice(index, 1);
+			}
+		};
 	}
 
 	/**
@@ -58,5 +90,5 @@ export function createStore(state) {
 	}
 
 	// Exposed store methods
-	return { getState, dispatch };
+	return { getState, dispatch, subscribe };
 }

@@ -9,6 +9,7 @@ describe('createStore', () => {
 		expect(store.setState).toBeUndefined();
 		expect(store.getState).toBeInstanceOf(Function);
 		expect(store.dispatch).toBeInstanceOf(Function);
+		expect(store.subscribe).toBeInstanceOf(Function);
 	});
 
 	it('sets the initial state', () => {
@@ -24,7 +25,9 @@ describe('createStore', () => {
 		store = createStore({ status: true });
 		expect(store.getState()).toEqual({ status: true });
 	});
+});
 
+describe('dispatch', () => {
 	it('throws if the action is invalid', () => {
 		const store = createStore();
 		const action = state => state;
@@ -71,6 +74,50 @@ describe('createStore', () => {
 
 		store.dispatch(inc, 10);
 		expect(store.getState()).toBe(10);
+	});
+
+	it('notifies subscribers when the state has been updated', () => {
+		const store = createStore();
+		const act = () => 0;
+		act.type = 'ACT';
+
+		const sub = jest.fn();
+
+		store.subscribe(sub);
+		store.dispatch(act);
+
+		expect(sub).toBeCalledWith(0, act);
+	});
+});
+
+describe('subscribe', () => {
+	it('it throws if the argument is not a function', () => {
+		const store = createStore();
+
+		expect(() => {
+			store.subscribe(null);
+		}).toThrow();
+
+		expect(() => {
+			store.subscribe(() => {});
+		}).not.toThrow();
+	});
+
+	it('returns "unsubscribe" function', () => {
+		const store = createStore(0);
+		const sub = jest.fn();
+		let unsubscribe = store.subscribe(sub);
+
+		expect(unsubscribe).toBeInstanceOf(Function);
+
+		// Remove subscriber
+		unsubscribe();
+
+		const act = () => 1;
+		act.type = 'ONE';
+
+		store.dispatch(act);
+		expect(sub).not.toBeCalled();
 	});
 });
 
