@@ -62,6 +62,16 @@ describe('createStore', () => {
 
 		expect(store.getState()).toBe(0);
 	});
+
+	it('it passes payload to actions', () => {
+		const store = createStore(0);
+
+		const inc = (state, payload) => state + payload;
+		inc.type = 'INC';
+
+		store.dispatch(inc, 10);
+		expect(store.getState()).toBe(10);
+	});
 });
 
 describe('createAction', () => {
