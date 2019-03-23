@@ -1,7 +1,3 @@
-
-# Created by https://www.gitignore.io/api/node,linux,macos,windows,vim,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=node,linux,macos,windows,vim,visualstudiocode
-
 ### Linux ###
 *~
 
@@ -181,4 +177,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/node,linux,macos,windows,vim,visualstudiocode
+### Custom ###
+package-lock.json
+yarn.lock
