@@ -1,3 +1,6 @@
+// Packages
+import isPromise from 'is-promise';
+
 type State = any;
 
 export interface Action<P> {
@@ -65,8 +68,10 @@ function createStore(state?: State): Store {
 		// Evaluate next state
 		const next = act(state, payload);
 
-		// Override current state
-		state = next;
+		// Override the state but ignore promises ;)
+		if (!isPromise(next)) {
+			state = next;
+		}
 
 		// Notify subscribers
 		for (let sub of subscribers) {
