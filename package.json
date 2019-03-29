@@ -16,10 +16,13 @@
 	"files": [
 		"dist"
 	],
-	"main": "dist/index.js",
-	"module": "dist/index.esm.js",
-	"browser": "dist/index.umd.js",
+	"main": "dist/store.js",
+	"module": "dist/store.esm.js",
+	"unpkg": "dist/store.umd.js",
+	"types": "dist/store.d.ts",
+	"source": "src/store.ts",
 	"scripts": {
+		"build": "microbundle",
 		"test": "jest"
 	},
 	"dependencies": {
@@ -33,6 +36,8 @@
 		"microbundle": "^0.11.0",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
-		"semantic-release": "^15.13.3"
+		"semantic-release": "^15.13.3",
+		"ts-jest": "^24.0.0",
+		"typescript": "^3.3.4000"
 	}
 }

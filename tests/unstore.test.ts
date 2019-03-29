@@ -1,12 +1,12 @@
 // Ours
-import { createStore, createAction } from '../src';
+import { createStore, createAction, Action } from '../src/store';
 
 describe('createStore', () => {
 	it('returns valid store object', () => {
 		const store = createStore();
 
 		// Helper functions
-		expect(store.setState).toBeUndefined();
+		expect((store as any).setState).toBeUndefined();
 		expect(store.getState).toBeInstanceOf(Function);
 		expect(store.dispatch).toBeInstanceOf(Function);
 		expect(store.subscribe).toBeInstanceOf(Function);
@@ -30,11 +30,11 @@ describe('createStore', () => {
 describe('dispatch', () => {
 	it('throws if the action is invalid', () => {
 		const store = createStore();
-		const action = state => state;
+		const action: Action<any> = state => state;
 
 		// Not a function
 		expect(() => {
-			store.dispatch('ACT');
+			store.dispatch(('ACT' as unknown) as Action<any>);
 		}).toThrow();
 
 		// Not "type" attribute
@@ -52,10 +52,10 @@ describe('dispatch', () => {
 	it('applies actions and set the result back to the state', () => {
 		const store = createStore(0);
 
-		const increment = state => state + 1;
+		const increment: Action<any> = state => state + 1;
 		increment.type = 'INC';
 
-		const decrement = state => state - 1;
+		const decrement: Action<any> = state => state - 1;
 		decrement.type = 'DEC';
 
 		store.dispatch(increment);
@@ -66,10 +66,10 @@ describe('dispatch', () => {
 		expect(store.getState()).toBe(0);
 	});
 
-	it('it passes payload to actions', () => {
+	it('passes payload to actions', () => {
 		const store = createStore(0);
 
-		const inc = (state, payload) => state + payload;
+		const inc: Action<number> = (state, payload) => state + payload;
 		inc.type = 'INC';
 
 		store.dispatch(inc, 10);
@@ -91,7 +91,7 @@ describe('dispatch', () => {
 });
 
 describe('subscribe', () => {
-	it('it throws if the argument is not a function', () => {
+	it('throws if the argument is not a function', () => {
 		const store = createStore();
 
 		expect(() => {
