@@ -1,5 +1,5 @@
 {
-	"name": "unstore",
+	"name": "stated-x",
 	"version": "0.0.0",
 	"description": "",
 	"keywords": [
@@ -10,17 +10,17 @@
 		"state",
 		"store"
 	],
-	"repository": "z0al/unstore",
+	"repository": "z0al/stated-x",
 	"license": "MIT",
 	"author": "Ahmed T. Ali",
 	"files": [
 		"dist"
 	],
-	"main": "dist/store.js",
-	"module": "dist/store.esm.js",
-	"unpkg": "dist/store.umd.js",
-	"types": "dist/store.d.ts",
-	"source": "src/store.ts",
+	"main": "dist/index.js",
+	"module": "dist/index.esm.js",
+	"unpkg": "dist/index.umd.js",
+	"types": "dist/index.d.ts",
+	"source": "src/index.ts",
 	"scripts": {
 		"build": "microbundle",
 		"test": "jest"
@@ -28,10 +28,14 @@
 	"dependencies": {
 		"is-promise": "^2.1.0"
 	},
+	"peerDependencies": {
+		"react": "^16.8.4"
+	},
 	"devDependencies": {
 		"@babel/preset-env": "^7.3.4",
 		"@types/is-promise": "^2.1.0",
 		"@types/jest": "^24.0.11",
+		"@types/react": "^16.8.10",
 		"documentation": "^9.3.1",
 		"jest": "^24.5.0",
 		"microbundle": "^0.11.0",

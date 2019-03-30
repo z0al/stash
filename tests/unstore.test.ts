@@ -1,5 +1,5 @@
 // Ours
-import { createStore, createAction, createThunk, Action } from '../src/store';
+import { createStore, createAction, createThunk, Action } from '../src';
 
 describe('createStore', () => {
 	it('returns valid store object', () => {
