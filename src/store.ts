@@ -4,12 +4,17 @@ import isPromise from 'is-promise';
 type State = any;
 
 export interface Action<P> {
-	(state: State, payload: P): State;
+	(state: State, payload: P, dispath?: DispatchFunc<P>): State;
 	type?: string;
+	thunk?: boolean;
+}
+
+export interface DispatchFunc<P> {
+	(action: Action<P>, payload?: P): void;
 }
 
 export interface ActionFunc<P> {
-	(state: State, payload?: P): State;
+	(state: State, payload?: P, dispath?: DispatchFunc<P>): State;
 }
 
 export type Subscriber = (state: State, action: Action<any>) => void;
@@ -47,6 +52,20 @@ function createAction<T>(type: string, fn: ActionFunc<T>): Action<T> {
 }
 
 /**
+ * Create an thunk function
+ *
+ * @template T
+ * @param {string} type
+ * @param {ActionFunc<T>} fn
+ * @returns {Action<T>}
+ */
+function createThunk<T>(type: string, fn: ActionFunc<T>): Action<T> {
+	const act = createAction(type, fn);
+	act.thunk = true;
+	return act;
+}
+
+/**
  * Create a store that holds the state tree.
  *
  * @param {State} [state]
@@ -65,12 +84,16 @@ function createStore(state?: State): Store {
 			throw new Error('Expected action.type to be a string');
 		}
 
-		// Evaluate next state
-		const next = act(state, payload);
+		// Run as thunk
+		if (act.thunk) {
+			act(state, payload, dispatch);
+		} else {
+			const next = act(state, payload);
 
-		// Override the state but ignore promises ;)
-		if (!isPromise(next)) {
-			state = next;
+			// Override the state but ignore promises ;)
+			if (!isPromise(next)) {
+				state = next;
+			}
 		}
 
 		// Notify subscribers
@@ -105,4 +128,4 @@ function createStore(state?: State): Store {
 	return { dispatch, subscribe, getState };
 }
 
-export { createAction, createStore };
+export { createAction, createStore, createThunk };
