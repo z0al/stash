@@ -6,7 +6,7 @@ describe('createStore', () => {
 		const store = createStore();
 
 		// Helper functions
-		expect((store as any).setState).toBeUndefined();
+		expect(store.setState).toBeUndefined();
 		expect(store.getState).toBeInstanceOf(Function);
 		expect(store.dispatch).toBeInstanceOf(Function);
 		expect(store.subscribe).toBeInstanceOf(Function);
@@ -30,11 +30,11 @@ describe('createStore', () => {
 describe('dispatch', () => {
 	it('throws if the action is invalid', () => {
 		const store = createStore();
-		const action: Action<any> = state => state;
+		const action = state => state;
 
 		// Not a function
 		expect(() => {
-			store.dispatch(('ACT' as unknown) as Action<any>);
+			store.dispatch('ACT');
 		}).toThrow();
 
 		// Not "type" attribute
@@ -52,10 +52,10 @@ describe('dispatch', () => {
 	it('applies actions and set the result back to the state', () => {
 		const store = createStore(0);
 
-		const increment: Action<any> = state => state + 1;
+		const increment = state => state + 1;
 		increment.type = 'INC';
 
-		const decrement: Action<any> = state => state - 1;
+		const decrement = state => state - 1;
 		decrement.type = 'DEC';
 
 		store.dispatch(increment);
@@ -69,7 +69,7 @@ describe('dispatch', () => {
 	it('passes payload to actions', () => {
 		const store = createStore(0);
 
-		const inc: Action<number> = (state, payload) => state + payload;
+		const inc = (state, payload) => state + payload;
 		inc.type = 'INC';
 
 		store.dispatch(inc, 10);

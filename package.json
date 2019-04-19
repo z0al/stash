@@ -1,5 +1,5 @@
 {
-	"name": "stated-x",
+	"name": "statx",
 	"version": "0.0.0",
 	"description": "",
 	"keywords": [
@@ -14,15 +14,15 @@
 	"license": "MIT",
 	"author": "Ahmed T. Ali",
 	"files": [
-		"dist"
+		"dist",
+		"index.d.ts"
 	],
 	"main": "dist/index.js",
 	"module": "dist/index.esm.js",
-	"unpkg": "dist/index.umd.js",
-	"types": "dist/index.d.ts",
-	"source": "src/index.ts",
+	"browser": "dist/index.umd.js",
+	"types": "index.d.ts",
 	"scripts": {
-		"build": "microbundle",
+		"build": "rimraf dist && rollup -c",
 		"test": "jest"
 	},
 	"dependencies": {
@@ -38,9 +38,14 @@
 		"@types/react": "^16.8.10",
 		"documentation": "^9.3.1",
 		"jest": "^24.5.0",
-		"microbundle": "^0.11.0",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
+		"rimraf": "^2.6.3",
+		"rollup": "^1.10.0",
+		"rollup-plugin-babel": "^4.3.2",
+		"rollup-plugin-commonjs": "^9.3.4",
+		"rollup-plugin-node-resolve": "^4.2.3",
+		"rollup-plugin-terser": "^4.0.4",
 		"semantic-release": "^15.13.3",
 		"ts-jest": "^24.0.0",
 		"typescript": "^3.3.4000"
