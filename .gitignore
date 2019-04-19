@@ -178,9 +178,7 @@ $RECYCLE.BIN/
 *.lnk
 
 ### Custom ###
-lib/*
-!lib/index.d.ts
-!lib/react.d.ts
+dist
 package-lock.json
 yarn.lock
 .rts*

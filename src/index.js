@@ -1,25 +1,40 @@
+// @ts-check
+
 // Packages
 import isPromise from 'is-promise';
 
 /**
  * Create an action function
+ *
+ * @typedef {Function} Action
+ *
+ * @param {string} type
+ * @param {Action} fn
  */
 export function createAction(type, fn) {
+	// @ts-ignore
 	fn.type = type;
 	return fn;
 }
 
 /**
  * Create an thunk function
+ *
+ * @param {string} type
+ * @param {Action} fn
  */
 export function createThunk(type, fn) {
 	const act = createAction(type, fn);
+
+	// @ts-ignore
 	act.thunk = true;
 	return act;
 }
 
 /**
  * Create a store that holds the state tree.
+ *
+ * @param {any} state
  */
 export function createStore(state) {
 	// List of listeners
@@ -27,17 +42,22 @@ export function createStore(state) {
 
 	/**
 	 * Call `action()` and persist the result back to the store.
+	 *
+	 * @param {Action} act
+	 * @param {any} payload
 	 */
 	function dispatch(act, payload) {
 		if (typeof act !== 'function') {
 			throw new Error('Expected action to be a function');
 		}
 
+		// @ts-ignore
 		if (typeof act.type !== 'string') {
 			throw new Error('Expected action.type to be a string');
 		}
 
 		// Run as thunk
+		// @ts-ignore
 		if (act.thunk) {
 			act(state, payload, dispatch);
 		} else {
@@ -58,6 +78,8 @@ export function createStore(state) {
 	/**
 	 * Register a subscriber function to be called whenever state
 	 * is changed. Returns an `unsubscribe()` function.
+	 *
+	 * @param {Function} fn
 	 */
 	function subscribe(fn) {
 		if (typeof fn !== 'function') {
