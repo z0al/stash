@@ -14,15 +14,14 @@
 	"license": "MIT",
 	"author": "Ahmed T. Ali",
 	"files": [
-		"dist",
-		"index.d.ts"
+		"lib"
 	],
-	"main": "dist/index.js",
-	"module": "dist/index.esm.js",
-	"browser": "dist/index.umd.js",
-	"types": "index.d.ts",
+	"main": "lib/index.js",
+	"module": "lib/index.esm.js",
+	"browser": "lib/index.umd.js",
+	"types": "lib/index.d.ts",
 	"scripts": {
-		"build": "rimraf dist && rollup -c",
+		"build": "rollup -c",
 		"test": "jest"
 	},
 	"dependencies": {
@@ -40,7 +39,6 @@
 		"jest": "^24.5.0",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
-		"rimraf": "^2.6.3",
 		"rollup": "^1.10.0",
 		"rollup-plugin-babel": "^4.3.2",
 		"rollup-plugin-commonjs": "^9.3.4",
