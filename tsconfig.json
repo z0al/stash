@@ -1,7 +1,0 @@
-{
-	"compilerOptions": {
-		"module": "es2015",
-		"esModuleInterop": true
-	},
-	"exclude": ["node_modules", "tests"]
-}
