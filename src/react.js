@@ -4,6 +4,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 const StateContext = React.createContext(undefined);
+const DispatchContext = React.createContext(undefined);
 
 /**
  * Subscribe to to store and re-render if necessary.
@@ -15,7 +16,7 @@ const StateContext = React.createContext(undefined);
  */
 export function Provider(props) {
 	const { store } = props;
-	let [state, setState] = useState(store.getState());
+	const [state, setState] = useState(store.getState());
 
 	/**
 	 * Update the local state
@@ -37,9 +38,11 @@ export function Provider(props) {
 	);
 
 	return (
-		<StateContext.Provider value={state}>
-			{props.children}
-		</StateContext.Provider>
+		<DispatchContext.Provider value={store.dispatch}>
+			<StateContext.Provider value={state}>
+				{props.children}
+			</StateContext.Provider>
+		</DispatchContext.Provider>
 	);
 }
 
@@ -53,4 +56,13 @@ export function Provider(props) {
 export function useSelect() {
 	const state = useContext(StateContext);
 	return state;
+}
+
+/**
+ * A proxy to access store's dispatch function
+ *
+ * @returns
+ */
+export function useDispatch() {
+	return useContext(DispatchContext);
 }

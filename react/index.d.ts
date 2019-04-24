@@ -1,7 +1,8 @@
 import * as React from 'react';
+import * as store from '..';
 
 interface ProviderProps {
-	store: any;
+	store: store.Store;
 }
 
 /**
@@ -13,3 +14,8 @@ export declare const Provider: React.FunctionComponent<ProviderProps>;
  * A hook to get current state
  */
 export declare function useSelect(): any;
+
+/**
+ * A proxy to access store's dispatch function
+ */
+export declare function useDispatch(): store.DispatchFunc;
