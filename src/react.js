@@ -3,7 +3,7 @@
 // Packages
 import React, { useContext, useEffect, useState } from 'react';
 
-const StoreContext = React.createContext(null);
+const StateContext = React.createContext(undefined);
 
 /**
  * Subscribe to to store and re-render if necessary.
@@ -15,17 +15,17 @@ const StoreContext = React.createContext(null);
  */
 export function Provider(props) {
 	const { store } = props;
-	let [current, setState] = useState(store.getState());
+	let [state, setState] = useState(store.getState());
 
 	/**
 	 * Update the local state
 	 *
-	 * @param {*} state
+	 * @param {*} next
 	 */
-	function update(state) {
+	function update(next) {
 		// Skip unnecessary updates
-		if (current !== state) {
-			setState(state);
+		if (state !== next) {
+			setState(next);
 		}
 	}
 
@@ -37,18 +37,20 @@ export function Provider(props) {
 	);
 
 	return (
-		<StoreContext.Provider value={current}>
+		<StateContext.Provider value={state}>
 			{props.children}
-		</StoreContext.Provider>
+		</StateContext.Provider>
 	);
 }
 
 /**
  * A hook to get current state
  *
+ * @todo accept a selector as a param and use useMemo
+ *
  * @returns
  */
 export function useSelect() {
-	const value = useContext(StoreContext);
-	return value;
+	const state = useContext(StateContext);
+	return state;
 }
