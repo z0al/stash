@@ -31,7 +31,7 @@
 		"typescript": "^3.4.5"
 	},
 	"peerDependencies": {
-		"@stash/it": ">=0.0.0"
+		"@stash/it": ">=0.1.1"
 	},
 	"publishConfig": {
 		"access": "public"
