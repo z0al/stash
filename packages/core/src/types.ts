@@ -14,7 +14,11 @@ export interface ActionFunc<P> {
 	(state: State, payload?: P, dispath?: DispatchFunc<P>): State;
 }
 
-export type Subscriber = (state: State, action: Action<any>) => void;
+export type Subscriber = (
+	state: State,
+	action: Action<any>,
+	payload: any
+) => void;
 export type UnsubscribeFunc = () => void;
 
 export interface Store {

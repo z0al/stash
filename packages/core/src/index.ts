@@ -64,7 +64,7 @@ export function createStore(state?: State): Store {
 
 		// Notify subscribers
 		for (let sub of subscribers) {
-			sub(state, action);
+			sub(state, action, payload);
 		}
 	}
 
