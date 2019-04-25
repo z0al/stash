@@ -1,0 +1,39 @@
+{
+	"name": "@stash/logger",
+	"version": "0.0.0",
+	"description": "A pretty logger for Stash",
+	"keywords": [
+		"flux",
+		"redux",
+		"stash",
+		"state",
+		"store",
+		"log",
+		"logger"
+	],
+	"repository": "https://github.com/z0al/stash/tree/master/packages/logger",
+	"license": "MIT",
+	"author": "Ahmed T. Ali",
+	"files": [
+		"dist"
+	],
+	"main": "dist/index.js",
+	"module": "dist/index.esm.js",
+	"source": "src/index.ts",
+	"browser": "dist/index.umd.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"prepublishOnly": "microbundle"
+	},
+	"devDependencies": {
+		"@stash/it": "0.0.0",
+		"microbundle": "^0.11.0",
+		"typescript": "^3.4.5"
+	},
+	"peerDependencies": {
+		"@stash/it": ">=0.0.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
