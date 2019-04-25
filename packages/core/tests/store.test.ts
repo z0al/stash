@@ -85,9 +85,9 @@ describe('dispatch', () => {
 		const sub = jest.fn();
 
 		store.subscribe(sub);
-		store.dispatch(act);
+		store.dispatch(act, 'payload');
 
-		expect(sub).toBeCalledWith(0, act);
+		expect(sub).toBeCalledWith(0, act, 'payload');
 	});
 });
 
