@@ -1,2 +1,0 @@
-import{createContext as r,useState as t,useEffect as e,createElement as n,useContext as i}from"react";var o=r(void 0),u=r(void 0),c=function(r){var i=r.store,c=t(i.getState()),v=c[0],a=c[1];return e(function(){return i.subscribe(function(r){v!==r&&a(r)})},[i]),n(u.Provider,{value:i.dispatch},n(o.Provider,{value:v},r.children))};function v(){return i(o)}function a(){return i(u)}export{c as Provider,v as useSelect,a as useDispatch};
-//# sourceMappingURL=index.esm.js.map
