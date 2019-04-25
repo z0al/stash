@@ -1,55 +1,7 @@
 {
-	"name": "statx",
-	"version": "0.0.0",
-	"description": "",
-	"keywords": [
-		"flux",
-		"preact",
-		"react",
-		"redux",
-		"state",
-		"store"
-	],
-	"repository": "z0al/statx",
-	"license": "MIT",
-	"author": "Ahmed T. Ali",
-	"files": [
-		"dist",
-		"react",
-		"index.d.ts"
-	],
-	"main": "dist/index.js",
-	"module": "dist/index.esm.js",
-	"browser": "dist/index.umd.js",
-	"types": "index.d.ts",
-	"scripts": {
-		"build": "rimraf dist && rollup -c",
-		"test": "jest"
-	},
-	"dependencies": {
-		"is-promise": "^2.1.0"
-	},
-	"peerDependencies": {
-		"react": "^16.8.4"
-	},
+	"name": "stash",
+	"private": true,
 	"devDependencies": {
-		"@babel/preset-env": "^7.3.4",
-		"@babel/preset-react": "^7.0.0",
-		"@types/is-promise": "^2.1.0",
-		"@types/jest": "^24.0.11",
-		"@types/react": "^16.8.10",
-		"documentation": "^9.3.1",
-		"jest": "^24.5.0",
-		"react": "^16.8.4",
-		"react-dom": "^16.8.4",
-		"rimraf": "^2.6.3",
-		"rollup": "^1.10.0",
-		"rollup-plugin-babel": "^4.3.2",
-		"rollup-plugin-commonjs": "^9.3.4",
-		"rollup-plugin-node-resolve": "^4.2.3",
-		"rollup-plugin-terser": "^4.0.4",
-		"semantic-release": "^15.13.3",
-		"ts-jest": "^24.0.0",
-		"typescript": "^3.3.4000"
+		"lerna": "^3.13.4"
 	}
 }

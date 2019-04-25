@@ -1,8 +1,0 @@
-{
-	"name": "statx/react",
-	"private": true,
-	"main": "../dist/react.js",
-	"module": "../dist/react.esm.js",
-	"browser": "../dist/react.umd.js",
-	"types": "./index.d.ts"
-}
