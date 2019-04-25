@@ -39,7 +39,7 @@ export const Provider: React.FunctionComponent<Props> = function(props) {
 /**
  * A hook to get current state and store's dispatch function
  */
-export function useStore<P>(): [State, DispatchFunc<P>] {
+export function useStore(): [State, DispatchFunc] {
 	const store = React.useContext(StoreContext);
 
 	let state = store.getState();
