@@ -100,3 +100,6 @@ export function createStore(state?: State): Store {
 	// Exposed store methods
 	return { dispatch, subscribe, getState };
 }
+
+// Export types
+export * from './types';

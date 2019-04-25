@@ -11,3 +11,4 @@ export declare function createThunk<T>(type: string, fn: ActionFunc<T>): Action<
  * Create a store that holds the state tree.
  */
 export declare function createStore(state?: State): Store;
+export * from './types';

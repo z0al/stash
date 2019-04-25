@@ -1,0 +1,47 @@
+{
+	"name": "@stash/react",
+	"version": "0.0.0",
+	"description": "Yet another state management library",
+	"keywords": [
+		"flux",
+		"preact",
+		"react",
+		"redux",
+		"stash",
+		"state",
+		"store"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/z0al/stash.git"
+	},
+	"license": "MIT",
+	"author": "Ahmed T. Ali",
+	"files": [
+		"dist"
+	],
+	"main": "dist/index.js",
+	"module": "dist/index.esm.js",
+	"source": "src/index.tsx",
+	"browser": "dist/index.umd.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"prepublishOnly": "microbundle",
+		"test": "jest"
+	},
+	"peerDependencies": {
+		"react": ">=16.8.6",
+		"@stash/it": ">=0.0.0"
+	},
+	"devDependencies": {
+		"@stash/it": ">=0.0.0",
+		"@types/is-promise": "^2.1.0",
+		"@types/jest": "^24.0.11",
+		"@types/react": "^16.8.14",
+		"jest": "^24.7.1",
+		"microbundle": "^0.11.0",
+		"react": "^16.8.6",
+		"ts-jest": "^24.0.2",
+		"typescript": "^3.4.5"
+	}
+}
