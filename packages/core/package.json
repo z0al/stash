@@ -11,7 +11,7 @@
 		"state",
 		"store"
 	],
-	"repository": "https://github.com/z0al/stash/tree/master/packages/it",
+	"repository": "https://github.com/z0al/stash/tree/master/packages/core",
 	"license": "MIT",
 	"author": "Ahmed T. Ali",
 	"files": [
