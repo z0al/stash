@@ -1,9 +1,8 @@
 // Packages
-import * as React from 'react';
-import { Store, DispatchFunc } from '@stash/it';
+import React from 'react';
+import { Store, DispatchFunc, State } from '@stash/it';
 
-const StateContext = React.createContext(undefined);
-const DispatchContext = React.createContext(undefined);
+const StoreContext = React.createContext<Store>(null);
 
 interface Props {
 	store: Store;
@@ -31,25 +30,19 @@ export const Provider: React.FunctionComponent<Props> = function(props) {
 	);
 
 	return (
-		<DispatchContext.Provider value={store.dispatch}>
-			<StateContext.Provider value={state}>
-				{props.children}
-			</StateContext.Provider>
-		</DispatchContext.Provider>
+		<StoreContext.Provider value={{ ...store }}>
+			{props.children}
+		</StoreContext.Provider>
 	);
 };
 
 /**
- * A hook to get current state
+ * A hook to get current state and store's dispatch function
  */
-export function useSelect() {
-	const state = React.useContext(StateContext);
-	return state;
-}
+export function useStore<P>(): [State, DispatchFunc<P>] {
+	const store = React.useContext(StoreContext);
 
-/**
- * A proxy to access store's dispatch function
- */
-export function useDispatch<P>(): DispatchFunc<P> {
-	return React.useContext(DispatchContext);
+	let state = store.getState();
+
+	return [state, store.dispatch];
 }
