@@ -1,7 +1,7 @@
 {
 	"name": "@stash/react",
 	"version": "0.0.0",
-	"description": "Yet another state management library",
+	"description": "React bindings for Stash",
 	"keywords": [
 		"flux",
 		"preact",
@@ -11,10 +11,7 @@
 		"state",
 		"store"
 	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/z0al/stash.git"
-	},
+	"repository": "https://github.com/z0al/stash/tree/master/packages/react",
 	"license": "MIT",
 	"author": "Ahmed T. Ali",
 	"files": [
