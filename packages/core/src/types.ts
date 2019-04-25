@@ -1,17 +1,17 @@
 export type State = any;
 
 export interface Action<P> {
-	(state: State, payload: P, dispath?: DispatchFunc<P>): State;
+	(state: State, payload: P, dispatch?: DispatchFunc): State;
 	type?: string;
 	thunk?: boolean;
 }
 
-export interface DispatchFunc<P> {
-	(action: Action<P>, payload?: P): void;
+export interface DispatchFunc {
+	<P>(action: Action<P>, payload?: P): void;
 }
 
 export interface ActionFunc<P> {
-	(state: State, payload?: P, dispath?: DispatchFunc<P>): State;
+	(state: State, payload?: P, dispatch?: DispatchFunc): State;
 }
 
 export type Subscriber = (
@@ -22,7 +22,7 @@ export type Subscriber = (
 export type UnsubscribeFunc = () => void;
 
 export interface Store {
-	dispatch<P>(action: Action<P>, payload?: P): void;
+	dispatch: DispatchFunc;
 
 	subscribe(fn: Subscriber): UnsubscribeFunc;
 
