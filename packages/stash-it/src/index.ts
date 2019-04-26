@@ -12,16 +12,15 @@ import {
 /**
  * Create an action function
  */
-export function createAction<T>(type: string, fn: ActionFunc<T>): Action<T> {
-	(fn as Action<T>).type = type;
-	return fn;
+export function createAction<T>(type: string, func: ActionFunc<T>): Action<T> {
+	return { func, type };
 }
 
 /**
  * Create an thunk function
  */
-export function createThunk<T>(type: string, fn: ActionFunc<T>): Action<T> {
-	const act = createAction(type, fn);
+export function createThunk<T>(type: string, func: ActionFunc<T>): Action<T> {
+	const act = createAction(type, func);
 
 	// Mark as a thunk
 	act.thunk = true;
@@ -40,8 +39,8 @@ export function createStore(state?: State): Store {
 	 * Call `action()` and persist the result back to the store.
 	 */
 	function dispatch<P>(action: Action<P>, payload?: P) {
-		if (typeof action !== 'function') {
-			throw new Error('Expected action to be a function');
+		if (typeof action.func !== 'function') {
+			throw new Error('Expected action.func to be a function');
 		}
 
 		if (typeof action.type !== 'string') {
@@ -54,14 +53,15 @@ export function createStore(state?: State): Store {
 
 			// Wrap dispatch to track action calls
 			const track: DispatchFunc = <P>(act: Action<P>, args?: P) => {
-				act.by = thunk;
+				act = { ...act };
+				act.by = { ...thunk };
 				return dispatch(act, args);
 			};
 
-			return thunk(state, payload, track);
+			return thunk.func(state, payload, track);
 		}
 
-		state = action(state, payload);
+		state = action.func(state, payload);
 
 		// Notify subscribers
 		for (let sub of subscribers) {

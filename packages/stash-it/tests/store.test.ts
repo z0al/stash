@@ -7,7 +7,6 @@ describe('createStore', () => {
 		const store = createStore();
 
 		// Helper functions
-		expect((store as any).setState).toBeUndefined();
 		expect(store.getState).toBeInstanceOf(Function);
 		expect(store.dispatch).toBeInstanceOf(Function);
 		expect(store.subscribe).toBeInstanceOf(Function);
@@ -31,7 +30,7 @@ describe('createStore', () => {
 describe('dispatch', () => {
 	it('throws if the action is invalid', () => {
 		const store = createStore();
-		const action: Action<any> = state => state;
+		const action: Action<any> = { func: state => state };
 
 		// Not a function
 		expect(() => {
@@ -53,10 +52,10 @@ describe('dispatch', () => {
 	it('applies actions and set the result back to the state', () => {
 		const store = createStore(0);
 
-		const increment: Action<any> = state => state + 1;
+		const increment: Action<any> = { func: state => state + 1 };
 		increment.type = 'INC';
 
-		const decrement: Action<any> = state => state - 1;
+		const decrement: Action<any> = { func: state => state - 1 };
 		decrement.type = 'DEC';
 
 		store.dispatch(increment);
@@ -70,7 +69,7 @@ describe('dispatch', () => {
 	it('passes payload to actions', () => {
 		const store = createStore(0);
 
-		const inc: Action<number> = (state, payload) => state + payload;
+		const inc: Action<number> = { func: (state, payload) => state + payload };
 		inc.type = 'INC';
 
 		store.dispatch(inc, 10);
@@ -79,8 +78,7 @@ describe('dispatch', () => {
 
 	it('notifies subscribers when the state has been updated', () => {
 		const store = createStore();
-		const act = () => 0;
-		act.type = 'ACT';
+		const act: Action<any> = { func: () => 0, type: 'ACT' };
 
 		const sub = jest.fn();
 
@@ -126,8 +124,7 @@ describe('subscribe', () => {
 		// Remove subscriber
 		unsubscribe();
 
-		const act = () => 1;
-		act.type = 'ONE';
+		const act = { func: () => 1, type: 'T' };
 
 		store.dispatch(act);
 		expect(sub).not.toBeCalled();
@@ -140,8 +137,8 @@ describe('createAction', () => {
 		const act = createAction('myaction', fn);
 
 		expect(act.type).toBe('myaction');
-		expect(act).toBeInstanceOf(Function);
-		expect(act).toBe(fn);
+		expect(act.func).toBeInstanceOf(Function);
+		expect(act.func).toBe(fn);
 	});
 });
 
@@ -152,7 +149,7 @@ describe('createThunk', () => {
 
 		expect(act.type).toBe('myaction');
 		expect(act.thunk).toBe(true);
-		expect(act).toBeInstanceOf(Function);
-		expect(act).toBe(fn);
+		expect(act.func).toBeInstanceOf(Function);
+		expect(act.func).toBe(fn);
 	});
 });

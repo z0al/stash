@@ -1,7 +1,7 @@
 export type State = any;
 
 export interface Action<P> {
-	(state: State, payload: P, dispatch?: DispatchFunc): State;
+	func: ActionFunc<P>;
 	type?: string;
 	thunk?: boolean;
 	by?: Action<any>;
