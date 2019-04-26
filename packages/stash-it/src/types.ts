@@ -4,6 +4,7 @@ export interface Action<P> {
 	(state: State, payload: P, dispatch?: DispatchFunc): State;
 	type?: string;
 	thunk?: boolean;
+	by?: Action<any>;
 }
 
 export interface DispatchFunc {

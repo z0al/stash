@@ -1,6 +1,3 @@
-// Packages
-import isPromise from 'is-promise';
-
 // Ours
 import {
 	Action,
@@ -8,7 +5,8 @@ import {
 	Store,
 	State,
 	Subscriber,
-	UnsubscribeFunc
+	UnsubscribeFunc,
+	DispatchFunc
 } from './types';
 
 /**
@@ -52,15 +50,18 @@ export function createStore(state?: State): Store {
 
 		// Run as thunk
 		if (action.thunk) {
-			action(state, payload, dispatch);
-		} else {
-			const next = action(state, payload);
+			const thunk = action;
 
-			// Override the state but ignore promises ;)
-			if (!isPromise(next)) {
-				state = next;
-			}
+			// Wrap dispatch to track action calls
+			const track: DispatchFunc = <P>(act: Action<P>, args?: P) => {
+				act.by = thunk;
+				return dispatch(act, args);
+			};
+
+			return thunk(state, payload, track);
 		}
+
+		state = action(state, payload);
 
 		// Notify subscribers
 		for (let sub of subscribers) {

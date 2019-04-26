@@ -38,7 +38,7 @@ describe('dispatch', () => {
 			store.dispatch(('ACT' as unknown) as Action<any>);
 		}).toThrow();
 
-		// Not "type" attribute
+		// No "type" attribute
 		expect(() => {
 			store.dispatch(action);
 		}).toThrow();
@@ -88,6 +88,18 @@ describe('dispatch', () => {
 		store.dispatch(act, 'payload');
 
 		expect(sub).toBeCalledWith(0, act, 'payload');
+	});
+
+	it('tracks action calls in thunks', () => {
+		const store = createStore();
+		const act = createAction('my action', () => {});
+
+		const thunk = createThunk('my thunk', (s, p_, dispatch) => {
+			store.subscribe((state, action, payload) => {
+				expect(action).toBe(act);
+				expect(action.by).toEqual(thunk);
+			});
+		});
 	});
 });
 
