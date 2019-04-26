@@ -39,7 +39,7 @@
 	},
 	"peerDependencies": {
 		"@stash/it": ">=0.1.1",
-		"react": ">=16.8.6"
+		"react": ">=16.8.0"
 	},
 	"publishConfig": {
 		"access": "public"
