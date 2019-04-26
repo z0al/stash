@@ -1,6 +1,6 @@
 {
 	"name": "@stash/react",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "React bindings for Stash",
 	"keywords": [
 		"flux",
@@ -27,7 +27,7 @@
 		"test": "jest"
 	},
 	"devDependencies": {
-		"@stash/it": "^0.1.1",
+		"@stash/it": "^0.1.2",
 		"@types/is-promise": "^2.1.0",
 		"@types/jest": "^24.0.11",
 		"@types/react": "^16.8.14",
