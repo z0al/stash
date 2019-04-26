@@ -34,28 +34,29 @@ export default function logger(store: Store) {
 	let current = store.getState();
 
 	store.subscribe((state: any, action: Action<any>, payload: any) => {
-		const type = action.thunk ? 'thunk' : 'action';
+		const name = action.type;
+		let thunk = '';
+		if (action.by) {
+			thunk = `[ ${action.by.type} ]`;
+		}
 
 		// Print group header
 		console.group(
-			`%c ${type} %c ${action.type} %c @ ${getTime()}`,
-			styles[type],
+			`%c action %c${thunk} %c${name} %c @ ${getTime()}`,
+			styles.action,
+			styles.thunk,
 			styles.inherit,
 			styles.time
 		);
 
 		// Previous state
-		if (!action.thunk) {
-			console.log('%c prev state', styles.prevstate, current);
-		}
+		console.log('%c prev state', styles.prevstate, current);
 
 		// Payload
 		console.log('%c payload', styles.payload, payload);
 
 		// Next state
-		if (!action.thunk) {
-			console.log('%c next state', styles.nextstate, state);
-		}
+		console.log('%c next state', styles.nextstate, state);
 
 		// Update our local state
 		current = state;
