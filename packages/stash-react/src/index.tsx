@@ -1,74 +1,56 @@
 // Packages
-import React from 'react';
+import React, { useLayoutEffect, useEffect, useContext } from 'react';
 import { Store, DispatchFunc, State } from '@stash/it';
 
-const StoreContext = React.createContext<Store>(null);
+// "If you use server rendering, keep in mind that neither useLayoutEffect
+// nor useEffect can run until the JavaScript is downloaded. This is why
+// React warns when a server-rendered component contains useLayoutEffect.
+//
+// To fix this, either move that logic to useEffect (if it isn’t necessary
+// for the first render), or delay showing that component until after the
+// client renders (if the HTML looks broken until useLayoutEffect runs)."
+//
+// -- React Docs
+const useIsomorphicEffect =
+	typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-interface Props {
-	store: Store;
-}
+// exposed for testing
+export const StoreContext = React.createContext<Store>(null);
 
 /**
- * Subscribe to a store and re-render if necessary.
+ * Subscribe to to store and re-render if necessary.
  */
-export class Provider extends React.Component<Props> {
-	unsubscribe = () => {};
+export function Provider(props: React.PropsWithChildren<{ store: Store }>) {
+	const { store } = props;
+	const [state, setState] = React.useState(store.getState());
 
-	constructor(props: Props) {
-		super(props);
-
-		this.state = props.store.getState();
-	}
-
-	componentDidMount() {
-		this.subscribe();
-	}
-
-	componentWillUnmount() {
-		this.unsubscribe();
-	}
-
-	componentDidUpdate({ store }: Props) {
-		if (this.props.store !== store) {
-			this.subscribe();
-		}
-	}
-
-	subscribe() {
-		const { store } = this.props;
-
-		// Unsubscribe from the current store
-		this.unsubscribe();
-
-		const update = (next: any) => {
-			// Skip unnecessary updates
-			if (this.state !== next) {
-				this.setState(next);
+	// Subscribe to state changes
+	useIsomorphicEffect(
+		function() {
+			function update(next: any) {
+				// Skip unnecessary updates
+				if (state !== next) {
+					setState(next);
+				}
 			}
-		};
 
-		this.unsubscribe = store.subscribe(update);
+			return store.subscribe(update);
+		},
+		[store]
+	);
 
-		// Make sure we have the latest state
-		update(store.getState());
-	}
-
-	render() {
-		const { store, children } = this.props;
-
-		return (
-			<StoreContext.Provider value={{ ...store }}>
-				{children}
-			</StoreContext.Provider>
-		);
-	}
+	return (
+		<StoreContext.Provider value={{ ...store }}>
+			{props.children}
+		</StoreContext.Provider>
+	);
 }
 
 /**
  * A hook to get current state and store's dispatch function
  */
 export function useStore(): [State, DispatchFunc] {
-	const store = React.useContext(StoreContext);
+	const store = useContext(StoreContext);
 
 	let state = store.getState();
 
