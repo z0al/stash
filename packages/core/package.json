@@ -1,7 +1,7 @@
 {
-	"name": "@stash/it",
+	"name": "@stash/core",
 	"version": "0.1.2",
-	"description": "Yet another state management library",
+	"description": "A tiny state container for JavaScript apps",
 	"keywords": [
 		"flux",
 		"preact",
@@ -11,7 +11,7 @@
 		"state",
 		"store"
 	],
-	"repository": "https://github.com/z0al/stash/tree/master/packages/it",
+	"repository": "https://github.com/z0al/stash/tree/master/packages/core",
 	"license": "MIT",
 	"author": "Ahmed T. Ali",
 	"files": [
@@ -23,7 +23,8 @@
 	"browser": "dist/index.umd.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"prepublishOnly": "microbundle",
+		"build": "microbundle",
+		"prepublishOnly": "npm run build",
 		"test": "jest"
 	},
 	"devDependencies": {

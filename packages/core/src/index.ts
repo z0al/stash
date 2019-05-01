@@ -1,31 +1,14 @@
 // Ours
-import {
-	Action,
-	ActionFunc,
-	Store,
-	State,
-	Subscriber,
-	UnsubscribeFunc,
-	DispatchFunc
-} from './types';
+import { Action, State, DispatchFunc } from './helpers';
 
-/**
- * Create an action function
- */
-export function createAction<T>(type: string, func: ActionFunc<T>): Action<T> {
-	return { func, type };
-}
+export type Subscriber = (state: State, action: Action<any>) => void;
 
-/**
- * Create an thunk function
- */
-export function createThunk<T>(type: string, func: ActionFunc<T>): Action<T> {
-	const act = createAction(type, func);
+export interface Store {
+	dispatch: DispatchFunc;
 
-	// Mark as a thunk
-	act.thunk = true;
+	subscribe(fn: Subscriber): () => void;
 
-	return act;
+	getState(): State;
 }
 
 /**
@@ -47,25 +30,24 @@ export function createStore(state?: State): Store {
 			throw new Error('Expected action.type to be a string');
 		}
 
+		// Copy action
+		action = { ...action, payload };
+
 		// Run as thunk
 		if (action.thunk) {
-			const thunk = action;
-
 			// Wrap dispatch to track action calls
 			const track: DispatchFunc = <P>(act: Action<P>, args?: P) => {
-				act = { ...act };
-				act.by = { ...thunk };
-				return dispatch(act, args);
+				return dispatch({ ...act, by: action }, args);
 			};
 
-			return thunk.func(state, payload, track);
+			return action.func(state, payload, track);
 		}
 
 		state = action.func(state, payload);
 
 		// Notify subscribers
 		for (let sub of subscribers) {
-			sub(state, action, payload);
+			sub(state, action);
 		}
 	}
 
@@ -73,7 +55,7 @@ export function createStore(state?: State): Store {
 	 * Register a subscriber function to be called whenever state
 	 * is changed. Returns an `unsubscribe()` function.
 	 */
-	function subscribe(fn: Subscriber): UnsubscribeFunc {
+	function subscribe(fn: Subscriber): () => void {
 		if (typeof fn !== 'function') {
 			throw new Error('A subscriber must be a function');
 		}
@@ -103,4 +85,4 @@ export function createStore(state?: State): Store {
 }
 
 // Export types
-export * from './types';
+export * from './helpers';

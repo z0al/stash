@@ -1,6 +1,5 @@
 // Ours
-import { Action } from '../src/types';
-import { createStore, createAction, createThunk } from '../src/index';
+import { createStore } from '../src';
 
 describe('createStore', () => {
 	it('returns valid store object', () => {
@@ -28,49 +27,46 @@ describe('createStore', () => {
 });
 
 describe('dispatch', () => {
-	it('throws if the action is invalid', () => {
+	it('throws if an invalid action object is given', () => {
 		const store = createStore();
-		const action: Action<any> = { func: state => state };
 
 		// Not a function
 		expect(() => {
-			store.dispatch(('ACT' as unknown) as Action<any>);
+			store.dispatch({} as any);
 		}).toThrow();
 
 		// No "type" attribute
 		expect(() => {
-			store.dispatch(action);
+			store.dispatch({ func: () => {} });
 		}).toThrow();
 
 		expect(() => {
-			action.type = 'ACT';
-
-			store.dispatch(action);
+			store.dispatch({ func: () => {}, type: 'ACT' });
 		}).not.toThrow();
 	});
 
-	it('applies actions and set the result back to the state', () => {
-		const store = createStore(0);
+	it('calls action.func and set the result back to the state', () => {
+		const store = createStore(-1);
 
-		const increment: Action<any> = { func: state => state + 1 };
-		increment.type = 'INC';
+		const set0 = { func: jest.fn().mockReturnValue(0), type: 'ZERO' };
+		const set10 = { func: jest.fn().mockReturnValue(10), type: 'TEN' };
 
-		const decrement: Action<any> = { func: state => state - 1 };
-		decrement.type = 'DEC';
-
-		store.dispatch(increment);
-		expect(store.getState()).toBe(1);
-
-		store.dispatch(decrement);
-
+		store.dispatch(set0);
+		expect(set0.func).toBeCalledWith(-1, undefined);
+		expect(set0.func).toBeCalledTimes(1);
 		expect(store.getState()).toBe(0);
+
+		store.dispatch(set10, 'DOES NOT MATTER');
+
+		expect(set10.func).toBeCalledWith(0, 'DOES NOT MATTER');
+		expect(set10.func).toBeCalledTimes(1);
+		expect(store.getState()).toBe(10);
 	});
 
 	it('passes payload to actions', () => {
 		const store = createStore(0);
 
-		const inc: Action<number> = { func: (state, payload) => state + payload };
-		inc.type = 'INC';
+		const inc = { func: (c: number, n: number) => c + n, type: 'INC' };
 
 		store.dispatch(inc, 10);
 		expect(store.getState()).toBe(10);
@@ -78,26 +74,32 @@ describe('dispatch', () => {
 
 	it('notifies subscribers when the state has been updated', () => {
 		const store = createStore();
-		const act: Action<any> = { func: () => 0, type: 'ACT' };
+		const act = { func: () => 0, type: 'ACT' };
 
 		const sub = jest.fn();
 
 		store.subscribe(sub);
 		store.dispatch(act, 'payload');
 
-		expect(sub).toBeCalledWith(0, act, 'payload');
+		expect(sub).toBeCalledWith(0, { ...act, payload: 'payload' });
 	});
 
 	it('tracks action calls in thunks', () => {
-		const store = createStore();
-		const act = createAction('my action', () => {});
+		const store = createStore(null);
+		const listener = jest.fn();
+		const action = { func: jest.fn().mockReturnValue(0), type: 'my action' };
 
-		const thunk = createThunk('my thunk', (s, p_, dispatch) => {
-			store.subscribe((state, action, payload) => {
-				expect(action).toBe(act);
-				expect(action.by).toEqual(thunk);
-			});
-		});
+		const thunk = {
+			type: 'my thunk',
+			thunk: true,
+			func: (_, __, fire) => fire(action)
+		};
+
+		store.subscribe(listener);
+		store.dispatch(thunk);
+
+		expect(action.func).toBeCalledTimes(1);
+		expect(listener).toBeCalledWith(0, { ...action, by: thunk });
 	});
 });
 
@@ -128,28 +130,5 @@ describe('subscribe', () => {
 
 		store.dispatch(act);
 		expect(sub).not.toBeCalled();
-	});
-});
-
-describe('createAction', () => {
-	it('adds .type to the action function', () => {
-		const fn = state => state;
-		const act = createAction('myaction', fn);
-
-		expect(act.type).toBe('myaction');
-		expect(act.func).toBeInstanceOf(Function);
-		expect(act.func).toBe(fn);
-	});
-});
-
-describe('createThunk', () => {
-	it('adds .type and .thunk to the action function', () => {
-		const fn = state => state;
-		const act = createThunk('myaction', fn);
-
-		expect(act.type).toBe('myaction');
-		expect(act.thunk).toBe(true);
-		expect(act.func).toBeInstanceOf(Function);
-		expect(act.func).toBe(fn);
 	});
 });
