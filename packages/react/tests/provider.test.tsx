@@ -3,7 +3,7 @@ import React from 'react';
 import { cleanup, render, fireEvent } from 'react-testing-library';
 
 // Ours
-import { createStore, Store, createAction } from '@stash/it';
+import { createStore, Store, createAction } from '@stash/core';
 import { Provider, useStore } from '../src';
 
 const Inc = createAction('INC', count => count + 1);

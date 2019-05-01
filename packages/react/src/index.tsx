@@ -1,6 +1,6 @@
 // Packages
 import React, { useLayoutEffect, useEffect, useContext } from 'react';
-import { Store, DispatchFunc, State } from '@stash/it';
+import { Store, DispatchFunc, State } from '@stash/core';
 
 // "If you use server rendering, keep in mind that neither useLayoutEffect
 // nor useEffect can run until the JavaScript is downloaded. This is why
