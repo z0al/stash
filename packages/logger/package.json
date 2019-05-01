@@ -23,15 +23,20 @@
 	"browser": "dist/index.umd.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"prepublishOnly": "microbundle"
+		"build": "microbundle",
+		"prepublishOnly": "npm run build",
+		"test": "jest"
 	},
 	"devDependencies": {
-		"@stash/it": "^0.1.2",
+		"@stash/core": "^0.1.2",
+		"@types/jest": "^24.0.12",
+		"jest": "^24.7.1",
 		"microbundle": "^0.11.0",
+		"ts-jest": "^24.0.2",
 		"typescript": "^3.4.5"
 	},
 	"peerDependencies": {
-		"@stash/it": ">=0.1.1"
+		"@stash/core": ">=0.1.2"
 	},
 	"publishConfig": {
 		"access": "public"
