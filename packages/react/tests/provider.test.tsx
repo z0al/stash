@@ -7,7 +7,7 @@ import { createStore, Store, createAction } from '@stash/core';
 import { Provider, useStore } from '../src';
 
 const Inc = createAction('INC', count => count + 1);
-const Dec = createAction('INC', count => count - 1);
+const Dec = createAction('DEC', count => count - 1);
 
 const Counter = () => {
 	const [count, dispatch] = useStore();
@@ -64,6 +64,7 @@ describe('Provider', () => {
 		expect(getByTestId('count').textContent).toBe('0');
 
 		fireEvent.click(getByTestId('inc'));
+
 		expect(getByTestId('count').textContent).toBe('1');
 
 		fireEvent.click(getByTestId('inc'));
@@ -71,5 +72,8 @@ describe('Provider', () => {
 
 		fireEvent.click(getByTestId('dec'));
 		expect(getByTestId('count').textContent).toBe('1');
+
+		fireEvent.click(getByTestId('dec'));
+		expect(getByTestId('count').textContent).toBe('0');
 	});
 });

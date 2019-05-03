@@ -25,19 +25,16 @@ export function Provider(props: React.PropsWithChildren<{ store: Store }>) {
 	const [state, setState] = React.useState(store.getState());
 
 	// Subscribe to state changes
-	useIsomorphicEffect(
-		function() {
-			function update(next: any) {
-				// Skip unnecessary updates
-				if (state !== next) {
-					setState(next);
-				}
+	useIsomorphicEffect(() => {
+		function update(next: any) {
+			// Skip unnecessary updates
+			if (state !== next) {
+				setState(next);
 			}
+		}
 
-			return store.subscribe(update);
-		},
-		[store]
-	);
+		return store.subscribe(update);
+	}, [store, state]);
 
 	return (
 		<StoreContext.Provider value={{ ...store }}>
