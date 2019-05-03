@@ -1,6 +1,6 @@
 {
 	"name": "@stash/logger",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"description": "A pretty logger for Stash",
 	"keywords": [
 		"flux",
@@ -28,7 +28,7 @@
 		"test": "jest"
 	},
 	"devDependencies": {
-		"@stash/core": "^0.1.2",
+		"@stash/core": "^0.2.0",
 		"@types/jest": "^24.0.12",
 		"jest": "^24.7.1",
 		"microbundle": "^0.11.0",
