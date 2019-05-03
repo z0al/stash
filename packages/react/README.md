@@ -10,7 +10,7 @@
 You must install [React](https://reactjs.org) v16.8 (or later) to use this package.
 
 ```sh
-$ npm i @stash/react
+$ npm i react @stash/react
 ```
 
 ## Usage

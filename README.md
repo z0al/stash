@@ -33,12 +33,12 @@ const AddTodo = createAction("Add todo", (state, todo) => {
   return { ...state, todos: [...state.todos, todo] };
 });
 
-// The first param (e.g. "Set loading") is sued for logging
+// The first param (e.g. "Set loading") is used for logging
 const SetLoading = createAction("Set loading", (state, loading) => {
   return { ...state, loading };
 });
 
-// A thunk can dispatch actions asynchronously
+// A thunk may dispatch actions asynchronously
 const LoadTodos = createThunk("Load todos", (state, payload, dispatch) => {
   dispatch(SetLoading, true);
 
@@ -105,7 +105,7 @@ ReactDOM.render(
 
 ## Logging
 
-You need to install `@stash/logger` package first.
+Install `@stash/logger` package:
 
 ```sh
 $ npm add -D @stash/logger
