@@ -32,16 +32,16 @@ describe('dispatch', () => {
 
 		// Not a function
 		expect(() => {
-			store.dispatch({} as any);
+			store.dispatch({} as any, {});
 		}).toThrow();
 
 		// No "type" attribute
 		expect(() => {
-			store.dispatch({ func: () => {} });
+			store.dispatch({ func: () => {} }, {});
 		}).toThrow();
 
 		expect(() => {
-			store.dispatch({ func: () => {}, type: 'ACT' });
+			store.dispatch({ func: () => {}, type: 'ACT' }, {});
 		}).not.toThrow();
 	});
 
@@ -51,8 +51,8 @@ describe('dispatch', () => {
 		const set0 = { func: jest.fn().mockReturnValue(0), type: 'ZERO' };
 		const set10 = { func: jest.fn().mockReturnValue(10), type: 'TEN' };
 
-		store.dispatch(set0);
-		expect(set0.func).toBeCalledWith(-1, undefined);
+		store.dispatch(set0, {});
+		expect(set0.func).toBeCalledWith(-1, {});
 		expect(set0.func).toBeCalledTimes(1);
 		expect(store.getState()).toBe(0);
 
@@ -96,10 +96,13 @@ describe('dispatch', () => {
 		};
 
 		store.subscribe(listener);
-		store.dispatch(thunk);
+		store.dispatch(thunk, {});
 
 		expect(action.func).toBeCalledTimes(1);
-		expect(listener).toBeCalledWith(0, { ...action, by: thunk });
+		expect(listener).toBeCalledWith(0, {
+			...action,
+			by: { ...thunk, payload: {} }
+		});
 	});
 });
 
@@ -128,7 +131,7 @@ describe('subscribe', () => {
 
 		const act = { func: () => 1, type: 'T' };
 
-		store.dispatch(act);
+		store.dispatch(act, {});
 		expect(sub).not.toBeCalled();
 	});
 });
