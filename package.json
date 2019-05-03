@@ -1,6 +1,9 @@
 {
 	"name": "stash",
 	"private": true,
+	"scripts": {
+		"test": "lerna run test"
+	},
 	"devDependencies": {
 		"lerna": "^3.13.4"
 	}
