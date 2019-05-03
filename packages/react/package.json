@@ -41,7 +41,7 @@
 		"typescript": "^3.4.5"
 	},
 	"peerDependencies": {
-		"@stash/core": ">=0.1.2",
+		"@stash/core": ">=0.2.0",
 		"react": ">=16.8.0"
 	},
 	"publishConfig": {

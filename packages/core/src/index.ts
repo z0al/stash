@@ -19,7 +19,11 @@ export function createStore(state?: State): Store {
 	const subscribers: Subscriber[] = [];
 
 	/**
-	 * Call `action()` and persist the result back to the store.
+	 * Calls `action` and persist the result back to the store.
+	 *
+	 * @template P
+	 * @param {Action<P>} action The action object to be dispatched.
+	 * @param {P} payload	To be passed to the action's function.
 	 */
 	function dispatch<P>(action: Action<P>, payload: P) {
 		if (typeof action.func !== 'function') {
@@ -52,8 +56,11 @@ export function createStore(state?: State): Store {
 	}
 
 	/**
-	 * Register a subscriber function to be called whenever state
+	 * Registers a subscriber function to be called whenever state
 	 * is changed. Returns an `unsubscribe()` function.
+	 *
+	 * @param {Subscriber} fn	Gets called when the state changes.
+	 * @returns {()=> void} Call this to unsubscribe.
 	 */
 	function subscribe(fn: Subscriber): () => void {
 		if (typeof fn !== 'function') {
@@ -74,7 +81,9 @@ export function createStore(state?: State): Store {
 	}
 
 	/**
-	 * Return current state tree.
+	 * Returns current state tree.
+	 *
+	 * @returns {State}
 	 */
 	function getState(): State {
 		return state;
