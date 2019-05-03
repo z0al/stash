@@ -4,5 +4,8 @@ node_js:
 
 cache: npm
 
+before_script:
+  - npx lerna bootstrap
+
 notifications:
   email: false
