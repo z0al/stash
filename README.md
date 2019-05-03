@@ -13,20 +13,27 @@
 
 ## Usage
 
+
+### Creating the store object
+
 ```javascript
-import { createStore, createAction, createThunk } from "@stash/core";
-import { Provider, useStore } from "@stash/react";
+import { createStore } from "@stash/core";
 
 // create store and set initial state
 const store = createStore({ todos: [], loading: false });
+```
 
+### Adding actions and thunks
+
+```javascript
+import { createAction, createThunk } from "@stash/core";
 
 // An action is just a reducer
-// The first param is used for logging
 const AddTodo = createAction("Add todo", (state, todo) => {
   return { ...state, todos: [...state.todos, todo] };
 });
 
+// The first param (e.g. "Set loading") is sued for logging
 const SetLoading = createAction("Set loading", (state, loading) => {
   return { ...state, loading };
 });
@@ -40,6 +47,15 @@ const LoadTodos = createThunk("Load todos", (state, payload, dispatch) => {
     dispatch(SetLoading, false);
   }, 3000);
 });
+```
+
+### Accessing the store inside a component
+
+```javascript
+import React from 'react';
+import { useStore } from "@stash/react";
+
+import { AddTodo, LoadTodos } from './actions';
 
 function Todos() {
   // useStore also accepts a selector e.g.
@@ -67,13 +83,21 @@ function Todos() {
     </div>
   );
 }
+```
 
-// We must wrap the root component inside <Provider>
-export default () => {
+### Providing the store
+
+To be able to use `useStore` we must wrap our `<Todos>` inside the `<Provider>` component provided by `@stash/react` package. For example:
+
+```javascript
+import store from './store';
+
+ReactDOM.render(
   <Provider store={store}>
     <Todos />
-  </Provider>
-}
+  </Provider>,
+  document.getElementById("root")
+);
 ```
 
 ## Logging
