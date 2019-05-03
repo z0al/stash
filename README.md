@@ -51,6 +51,8 @@ const LoadTodos = createThunk("Load todos", (state, payload, dispatch) => {
 
 ### Accessing the store inside a component
 
+> **NOTE:** You need to use React v16.8.0 (or later) to run this code since `useStore` is a [custom hook](https://reactjs.org/docs/hooks-intro.html).
+
 ```javascript
 import React from 'react';
 import { useStore } from "@stash/react";
@@ -90,6 +92,7 @@ function Todos() {
 To be able to use `useStore` we must wrap our `<Todos>` inside the `<Provider>` component provided by `@stash/react` package. For example:
 
 ```javascript
+import { Provider } from "@stash/react";
 import store from './store';
 
 ReactDOM.render(
