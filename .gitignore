@@ -179,6 +179,5 @@ $RECYCLE.BIN/
 
 ### Custom ###
 dist
-package-lock.json
 yarn.lock
 .rts*
