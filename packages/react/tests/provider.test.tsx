@@ -18,7 +18,7 @@ const Counter = () => {
 			<button
 				data-testid={'inc'}
 				onClick={() => {
-					dispatch(Inc);
+					dispatch(Inc, {});
 				}}
 			>
 				+
@@ -27,7 +27,7 @@ const Counter = () => {
 			<button
 				data-testid={'dec'}
 				onClick={() => {
-					dispatch(Dec);
+					dispatch(Dec, {});
 				}}
 			>
 				-

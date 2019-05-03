@@ -21,7 +21,7 @@ export function createStore(state?: State): Store {
 	/**
 	 * Call `action()` and persist the result back to the store.
 	 */
-	function dispatch<P>(action: Action<P>, payload?: P) {
+	function dispatch<P>(action: Action<P>, payload: P) {
 		if (typeof action.func !== 'function') {
 			throw new Error('Expected action.func to be a function');
 		}

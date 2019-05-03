@@ -16,11 +16,11 @@ export interface Action<P> {
 }
 
 export interface DispatchFunc {
-	<P>(action: Action<P>, payload?: P): void;
+	<P>(action: Action<P>, payload: P): void;
 }
 
 export interface ActionFunc<P> {
-	(state: State, payload?: P, dispatch?: DispatchFunc): State;
+	(state: State, payload: P, dispatch?: DispatchFunc): State;
 }
 
 /**

@@ -13,7 +13,7 @@ function Tester({ selector }) {
 
 	return (
 		<div>
-			<button data-testid={'btn'} onClick={() => dispatch(action)} />
+			<button data-testid={'btn'} onClick={() => dispatch(action, {})} />
 			<span data-testid={'state'}>{state}</span>
 		</div>
 	);
@@ -46,7 +46,7 @@ describe('useStore', () => {
 		fireEvent.click(getByTestId('btn'));
 
 		expect(dispatch).toBeCalledTimes(1);
-		expect(dispatch).toBeCalledWith(action);
+		expect(dispatch).toBeCalledWith(action, {});
 		expect(getByTestId('state').textContent).toBe(state);
 	});
 
