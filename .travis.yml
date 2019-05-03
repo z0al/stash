@@ -5,7 +5,8 @@ node_js:
 cache: npm
 
 before_script:
-  - npx lerna bootstrap
+  - npm i
+  - npm run bootstrap
 
 notifications:
   email: false

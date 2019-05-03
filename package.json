@@ -2,6 +2,7 @@
 	"name": "stash",
 	"private": true,
 	"scripts": {
+		"bootstrap": "lerna bootstrap",
 		"test": "lerna run test"
 	},
 	"devDependencies": {
