@@ -1,16 +1,18 @@
 // Packages
 import React from 'react';
+import { createStore, Store, createAction } from '@stash/core';
 import { cleanup, render, fireEvent } from 'react-testing-library';
 
 // Ours
-import { createStore, Store, createAction } from '@stash/core';
-import { Provider, useStore } from '../src';
+import { Provider } from '../src/provider';
+import { StoreContext } from '../src/context';
 
-const Inc = createAction('INC', count => count + 1);
-const Dec = createAction('DEC', count => count - 1);
+const Inc = createAction('INC', (count, _) => count + 1);
+const Dec = createAction('DEC', (count, _) => count - 1);
 
 const Counter = () => {
-	const [count, dispatch] = useStore();
+	const { state, dispatch } = React.useContext(StoreContext);
+
 	return (
 		<div>
 			<button
@@ -21,7 +23,7 @@ const Counter = () => {
 			>
 				+
 			</button>
-			<h1 data-testid={'count'}>{count}</h1>
+			<h1 data-testid={'count'}>{state}</h1>
 			<button
 				data-testid={'dec'}
 				onClick={() => {
