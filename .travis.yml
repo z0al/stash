@@ -5,8 +5,10 @@ node_js:
 cache: npm
 
 before_script:
-  - npm i
-  - npm run bootstrap
+  - npm ci
+  - cd packages/core && npm ci
+  - cd ../react && npm ci
+  - cd ../logger && npm ci
 
 notifications:
   email: false
