@@ -8,7 +8,7 @@ import { subscribe } from './subscribe';
 // Default options
 const defaultOpt: Options = { console };
 
-function createLogger(options?: Options) {
+function createLogger(options: Options = defaultOpt) {
 	options = { ...options, ...defaultOpt };
 
 	return function(store: Store) {

@@ -24,7 +24,7 @@ describe('Subscribe', () => {
 	});
 
 	it('passes prev/next states correctly', () => {
-		let dispatch: Function;
+		let dispatch: any = () => {};
 
 		const store = {
 			getState: () => 'INIT',
