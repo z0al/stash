@@ -9,6 +9,7 @@ before_script:
   - cd packages/core && npm ci
   - cd ../react && npm ci
   - cd ../logger && npm ci
+  - cd ../..
 
 notifications:
   email: false
