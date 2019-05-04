@@ -40,7 +40,7 @@ export function createStore(state?: State): Store {
 		// Run as thunk
 		if (action.thunk) {
 			// Wrap dispatch to track action calls
-			const track: DispatchFunc = <P>(act: Action<P>, args?: P) => {
+			const track: DispatchFunc = <P>(act: Action<P>, args: P) => {
 				return dispatch({ ...act, by: action }, args);
 			};
 

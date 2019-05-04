@@ -92,7 +92,7 @@ describe('dispatch', () => {
 		const thunk = {
 			type: 'my thunk',
 			thunk: true,
-			func: (_, __, fire) => fire(action)
+			func: (_: any, __: any, fire: any) => fire(action)
 		};
 
 		store.subscribe(listener);
@@ -111,7 +111,7 @@ describe('subscribe', () => {
 		const store = createStore();
 
 		expect(() => {
-			store.subscribe(null);
+			store.subscribe(null as any);
 		}).toThrow();
 
 		expect(() => {

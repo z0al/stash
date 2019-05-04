@@ -3,7 +3,7 @@ import { createAction, createThunk } from '../src';
 
 describe('createAction', () => {
 	it('adds .type to the action function', () => {
-		const fn = state => state;
+		const fn = (state: any) => state;
 		const act = createAction('myaction', fn);
 
 		expect(act.type).toBe('myaction');
@@ -14,7 +14,7 @@ describe('createAction', () => {
 
 describe('createThunk', () => {
 	it('adds .type and .thunk to the action function', () => {
-		const fn = state => state;
+		const fn = (state: any) => state;
 		const act = createThunk('myaction', fn);
 
 		expect(act.type).toBe('myaction');

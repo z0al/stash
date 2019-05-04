@@ -19,8 +19,8 @@
 	],
 	"main": "dist/index.js",
 	"module": "dist/index.esm.js",
+	"umd:main": "dist/index.umd.js",
 	"source": "src/index.ts",
-	"browser": "dist/index.umd.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "microbundle",
