@@ -8,7 +8,7 @@ import { StoreContext } from '../src/context';
 
 const action = { type: 'ACT', func: () => {} };
 
-function Tester({ selector }) {
+function Tester({ selector }: any) {
 	const [state, dispatch] = useStore(selector);
 
 	return (
